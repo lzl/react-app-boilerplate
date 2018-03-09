@@ -28,4 +28,9 @@ module.exports = {
       filename: './index.html',
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 }
