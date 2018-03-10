@@ -19,6 +19,16 @@ const About = Loadable({
   loading: Loading,
 })
 
+const Signup = Loadable({
+  loader: () => import('../pages/signup'),
+  loading: Loading,
+})
+
+const Login = Loadable({
+  loader: () => import('../pages/login'),
+  loading: Loading,
+})
+
 // import NotFound from '../pages/404'
 // import Home from '../pages/home'
 // import About from '../pages/about'
@@ -27,6 +37,8 @@ export default () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
+    <Route exact path="/signup" component={Signup} />
+    <Route exact path="/login" component={Login} />
     <Route component={NotFound} />
   </Switch>
 )
