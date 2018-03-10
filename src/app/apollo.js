@@ -18,7 +18,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const authLink = new ApolloLink((operation, forward) => {
-  const token = 'Bearer jwt-token-from-web-app' // TODO getTokenFromLocalStorage()
+  const token = localStorage.getItem('auth-token')
   operation.setContext(() => ({
     headers: {
       Authorization: token,
