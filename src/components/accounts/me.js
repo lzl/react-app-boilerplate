@@ -3,7 +3,17 @@ import { Link } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { graphql, withApollo } from 'react-apollo'
 
-const Me = ({ data: { loading, me }, client }) => {
+const Me = ({ data: { error, loading, me }, client }) => {
+  if (error)
+    return (
+      <div>
+        {error.graphQLErrors.map(x => x.message)}
+        <br />
+        <Link to="/signup">Sign up</Link>
+        <br />
+        <Link to="/login">Login</Link>
+      </div>
+    )
   if (loading) return <div>loading...</div>
   const username = me && me.username
   if (username) {
@@ -18,12 +28,6 @@ const Me = ({ data: { loading, me }, client }) => {
         >
           Logout
         </button>
-      </div>
-    )
-  } else {
-    return (
-      <div>
-        <Link to="/signup">Sign up</Link> <Link to="/login">Login</Link>
       </div>
     )
   }

@@ -8,9 +8,9 @@ const GRAPHQL_URI = 'http://localhost:4000/graphql'
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
+    graphQLErrors.map(({ message, name, time_thrown }) =>
       console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        `[GraphQL error]: Message: ${message}, Name: ${name}, When: ${time_thrown}`
       )
     )
 

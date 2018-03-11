@@ -5,12 +5,17 @@ import { graphql, compose } from 'react-apollo'
 class PostSection extends PureComponent {
   handleSubmit = e => {
     e.preventDefault()
-    this.props.addPost({ text: this.input.value })
+    this.props
+      .addPost({ text: this.input.value })
+      .then(res => console.log('res'))
+      .catch(err => console.log('err'))
     this.form.reset()
   }
 
   render() {
-    const { data: { loading, allPosts = [] } } = this.props
+    const { data: { error, loading, allPosts = [] } } = this.props
+
+    if (error) return <div>{error.graphQLErrors.map(x => x.message)}</div>
 
     if (loading) return <div>loading...</div>
 
