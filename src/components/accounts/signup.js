@@ -7,7 +7,10 @@ class SignupForm extends PureComponent {
     e.preventDefault()
     const username = this.username.value
     const password = this.password.value
-    this.props.signup({ username, password })
+    this.props
+      .signup({ username, password })
+      .then(() => this.props.fetchMe())
+      .catch(error => console.log(error.graphQLErrors.map(x => x.message)))
     this.form.reset()
   }
 

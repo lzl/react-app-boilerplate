@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { graphql, withApollo } from 'react-apollo'
 
-const Me = ({ data: { error, loading, me }, client }) => {
+import SignupForm from './signup'
+import LoginForm from './login'
+
+const Me = ({ data, client }) => {
+  const { error, loading, me } = data
   if (error)
     return (
       <div>
         {error.graphQLErrors.map(x => x.message)}
         <br />
-        <Link to="/signup">Sign up</Link>
-        <br />
-        <Link to="/login">Login</Link>
+        <SignupForm fetchMe={() => data.refetch()} />
+        <LoginForm fetchMe={() => data.refetch()} />
       </div>
     )
   if (loading) return <div>loading...</div>
@@ -32,6 +35,9 @@ const Me = ({ data: { error, loading, me }, client }) => {
     )
   }
 }
+
+// <Link to="/signup">Sign up</Link>
+// <Link to="/login">Login</Link>
 
 const fetchMe = gql`
   query Query {

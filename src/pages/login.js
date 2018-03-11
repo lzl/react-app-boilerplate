@@ -10,7 +10,7 @@ const Login = () => (
       <title>Login</title>
     </Helmet>
     <h1>Login</h1>
-    <Link to="/">Home</Link>
+    <Link to="/account">Account</Link>
     <hr />
     <LoginForm />
   </div>

@@ -10,7 +10,7 @@ const Signup = () => (
       <title>Signup</title>
     </Helmet>
     <h1>Signup</h1>
-    <Link to="/">Home</Link>
+    <Link to="/account">Account</Link>
     <hr />
     <SignupForm />
   </div>

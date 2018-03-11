@@ -5,12 +5,12 @@ import styled from 'styled-components'
 
 import Me from '../components/accounts/me'
 
-const About = () => (
+const Account = () => (
   <Wrapper>
     <Helmet>
-      <title>About</title>
+      <title>Account</title>
     </Helmet>
-    <h1>About</h1>
+    <h1>Account</h1>
     <Link to="/">Home</Link>
     <hr />
     <Me />
@@ -21,4 +21,4 @@ const Wrapper = styled.div`
   color: #2ecc40;
 `
 
-export default About
+export default Account

@@ -7,7 +7,10 @@ class LoginForm extends PureComponent {
     e.preventDefault()
     const username = this.username.value
     const password = this.password.value
-    this.props.login({ username, password })
+    this.props
+      .login({ username, password })
+      .then(() => this.props.fetchMe())
+      .catch(error => console.log(error.graphQLErrors.map(x => x.message)))
     this.form.reset()
   }
 

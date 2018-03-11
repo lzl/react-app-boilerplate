@@ -7,8 +7,8 @@ class PostSection extends PureComponent {
     e.preventDefault()
     this.props
       .addPost({ text: this.input.value })
-      .then(res => console.log('res'))
-      .catch(err => console.log('err'))
+      .then(res => console.log('add post:', res))
+      .catch(error => console.log(error.graphQLErrors.map(x => x.message)))
     this.form.reset()
   }
 

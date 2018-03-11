@@ -2,10 +2,12 @@
   "name": "react-app-boilerplate",
   "private": true,
   "scripts": {
-    "dev": "webpack-serve --config webpack.dev.js",
-    "build": "rimraf dist && webpack --config webpack.prod.js",
+    "dev": "npm run fix-react-apollo && webpack-serve --config webpack.dev.js",
+    "build":
+      "npm run fix-react-apollo && rimraf dist && webpack --config webpack.prod.js",
     "start": "node server.js",
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "fix-react-apollo": "rimraf ./node_modules/react-apollo/*.mjs"
   },
   "dependencies": {
     "apollo-boost": "^0.1.2",
@@ -13,7 +15,7 @@
     "express": "^4.16.2",
     "graphql": "^0.13.1",
     "react": "^16.2.0",
-    "react-apollo": "^2.0.4",
+    "react-apollo": "2.1.0-beta.3",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.0.0",

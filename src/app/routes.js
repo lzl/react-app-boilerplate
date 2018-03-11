@@ -14,8 +14,8 @@ const Home = Loadable({
   loading: Loading,
 })
 
-const About = Loadable({
-  loader: () => import('../pages/about'),
+const Account = Loadable({
+  loader: () => import('../pages/account'),
   loading: Loading,
 })
 
@@ -29,14 +29,10 @@ const Login = Loadable({
   loading: Loading,
 })
 
-// import NotFound from '../pages/404'
-// import Home from '../pages/home'
-// import About from '../pages/about'
-
 export default () => (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route exact path="/about" component={About} />
+    <Route exact path="/account" component={Account} />
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/login" component={Login} />
     <Route component={NotFound} />
