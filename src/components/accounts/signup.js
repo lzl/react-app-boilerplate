@@ -35,7 +35,7 @@ class SignupForm extends PureComponent {
   }
 }
 
-const signup = gql`
+const SIGN_UP = gql`
   mutation signup($username: String!, $password: String) {
     signup(username: $username, password: $password) {
       token
@@ -43,7 +43,7 @@ const signup = gql`
   }
 `
 
-export default graphql(signup, {
+export default graphql(SIGN_UP, {
   props: ({ ownProps, mutate }) => ({
     signup: ({ username, password }) =>
       mutate({

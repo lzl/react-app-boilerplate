@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { graphql, withApollo } from 'react-apollo'
 
@@ -19,27 +18,22 @@ const Me = ({ data, client }) => {
     )
   if (loading) return <div>loading...</div>
   const username = me && me.username
-  if (username) {
-    return (
-      <div>
-        {username}{' '}
-        <button
-          onClick={() => {
-            localStorage.removeItem('auth-token')
-            client.resetStore()
-          }}
-        >
-          Logout
-        </button>
-      </div>
-    )
-  }
+  return (
+    <div>
+      {username}{' '}
+      <button
+        onClick={() => {
+          localStorage.removeItem('auth-token')
+          client.resetStore()
+        }}
+      >
+        Logout
+      </button>
+    </div>
+  )
 }
 
-// <Link to="/signup">Sign up</Link>
-// <Link to="/login">Login</Link>
-
-const fetchMe = gql`
+const FETCH_ME = gql`
   query Query {
     me {
       username
@@ -47,4 +41,4 @@ const fetchMe = gql`
   }
 `
 
-export default graphql(fetchMe)(withApollo(Me))
+export default graphql(FETCH_ME)(withApollo(Me))

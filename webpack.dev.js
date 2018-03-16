@@ -16,6 +16,7 @@ module.exports = merge(common, {
       stats: 'none',
     },
     add: (app, middleware, options) => {
+      // eslint-disable-line
       app.use(convert(history()))
     },
   },

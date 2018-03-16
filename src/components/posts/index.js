@@ -37,7 +37,7 @@ const PostList = ({ posts }) => (
 
 const PostItem = ({ item }) => <li>{item.text}</li>
 
-const fetchPosts = gql`
+const FETCH_POSTS = gql`
   query Query {
     allPosts {
       id
@@ -46,7 +46,7 @@ const fetchPosts = gql`
   }
 `
 
-const addPost = gql`
+const ADD_POST = gql`
   mutation addPost($text: String!) {
     addPost(text: $text) {
       id
@@ -56,12 +56,12 @@ const addPost = gql`
 `
 
 export default compose(
-  graphql(fetchPosts),
-  graphql(addPost, {
+  graphql(FETCH_POSTS),
+  graphql(ADD_POST, {
     props: ({ ownProps, mutate }) => ({
       addPost: ({ text }) =>
         mutate({
-          mutation: addPost,
+          mutation: ADD_POST,
           variables: { text },
           optimisticResponse: {
             __typename: 'Mutation',
@@ -72,9 +72,9 @@ export default compose(
             },
           },
           update: (proxy, { data: { addPost } }) => {
-            const data = proxy.readQuery({ query: fetchPosts })
+            const data = proxy.readQuery({ query: FETCH_POSTS })
             data.allPosts.push(addPost)
-            proxy.writeQuery({ query: fetchPosts, data })
+            proxy.writeQuery({ query: FETCH_POSTS, data })
           },
         }),
     }),
