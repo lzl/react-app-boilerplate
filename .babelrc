@@ -4,5 +4,8 @@
     "@babel/preset-stage-2",
     "@babel/preset-react"
   ],
-  "plugins": ["react-hot-loader/babel", "syntax-dynamic-import"]
+  "plugins": [
+    "react-hot-loader/babel",
+    "@babel/plugin-syntax-dynamic-import"
+  ]
 }
