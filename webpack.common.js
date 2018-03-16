@@ -27,7 +27,7 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
     }),
-    new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin({ openAnalyzer: false }),
   ],
   optimization: {
     splitChunks: {
