@@ -19,5 +19,6 @@ module.exports = {
         peerDependencies: true,
       },
     ],
+    'no-return-assign': ['error', 'except-parens'],
   },
 }

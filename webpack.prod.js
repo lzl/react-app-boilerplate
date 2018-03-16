@@ -6,9 +6,12 @@ module.exports = merge(common, {
   mode: 'production',
   plugins: [
     new OfflinePlugin({
+      autoUpdate: true,
       ServiceWorker: {
+        events: true,
         navigateFallbackURL: '/',
       },
+      AppCache: false,
     }),
   ],
 })
