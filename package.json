@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "dev": "npm run fix-react-apollo && webpack-serve --config webpack.dev.js",
-    "test": "jest",
     "build":
       "npm run fix-react-apollo && rimraf dist && webpack --config webpack.prod.js",
     "start": "node server.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "precommit": "pretty-quick --staged",
     "fix-react-apollo": "rimraf ./node_modules/react-apollo/*.mjs"
   },
