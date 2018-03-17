@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express')
 const compression = require('compression')
 
-const APP_PORT = 3000
+const APP_PORT = 8080
 const app = express()
 
 app.use(compression())
