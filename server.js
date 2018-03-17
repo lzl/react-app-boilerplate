@@ -6,10 +6,10 @@ const APP_PORT = 3000
 const app = express()
 
 app.use(compression())
-app.use(express.static(path.resolve(__dirname, '/dist')))
+app.use(express.static(path.resolve(__dirname, 'dist')))
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '/dist/index.html'), err => {
+  res.sendFile(path.resolve(__dirname, 'dist/index.html'), err => {
     if (err) res.status(500).send(err)
   })
 })
