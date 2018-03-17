@@ -7,6 +7,10 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 
 module.exports = merge(common, {
   mode: 'development',
+  output: {
+    filename: '[name].[hash:8].js',
+    sourceMapFilename: '[name].[hash:8].map',
+  },
   devtool: 'source-map',
   serve: {
     content: [__dirname],
