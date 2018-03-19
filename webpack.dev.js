@@ -3,6 +3,7 @@ const common = require('./webpack.common.js')
 const history = require('connect-history-api-fallback')
 const convert = require('koa-connect')
 const Stylish = require('webpack-stylish')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 
 module.exports = merge(common, {
@@ -24,5 +25,9 @@ module.exports = merge(common, {
       app.use(convert(history()))
     },
   },
-  plugins: [new Stylish(), new ErrorOverlayPlugin()],
+  plugins: [
+    new Stylish(),
+    new BundleAnalyzerPlugin({ openAnalyzer: false }),
+    new ErrorOverlayPlugin(),
+  ],
 })

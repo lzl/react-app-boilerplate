@@ -1,5 +1,4 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 module.exports = {
   module: {
@@ -27,7 +26,6 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
     }),
-    new BundleAnalyzerPlugin({ openAnalyzer: false }),
   ],
   optimization: {
     splitChunks: {
