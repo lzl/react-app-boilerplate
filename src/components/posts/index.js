@@ -1,41 +1,6 @@
-import React, { PureComponent } from 'react'
+import React, { createRef } from 'react'
 import gql from 'graphql-tag'
-import { graphql, compose } from 'react-apollo'
-
-class PostSection extends PureComponent {
-  handleSubmit = e => {
-    e.preventDefault()
-    this.props
-      .addPost({ text: this.input.value })
-      .then(res => console.log('add post:', res))
-      .catch(error => console.log(error.graphQLErrors.map(x => x.message)))
-    this.form.reset()
-  }
-
-  render() {
-    const { data: { error, loading, allPosts = [] } } = this.props
-
-    if (error) return <div>{error.graphQLErrors.map(x => x.message)}</div>
-
-    if (loading) return <div>loading...</div>
-
-    return (
-      <div>
-        <PostList posts={allPosts} />
-        <form onSubmit={this.handleSubmit} ref={el => (this.form = el)}>
-          <input type="text" ref={el => (this.input = el)} />
-          <input type="submit" />
-        </form>
-      </div>
-    )
-  }
-}
-
-const PostList = ({ posts }) => (
-  <ul>{posts.map(i => <PostItem key={i.id} item={i} />)}</ul>
-)
-
-const PostItem = ({ item }) => <li>{item.text}</li>
+import { Query, Mutation } from 'react-apollo'
 
 const FETCH_POSTS = gql`
   query Query {
@@ -46,6 +11,18 @@ const FETCH_POSTS = gql`
   }
 `
 
+const PostList = () => (
+  <Query query={FETCH_POSTS}>
+    {({ loading, error, data }) => {
+      if (error) return <div>{error.graphQLErrors.map(x => x.message)}</div>
+      if (loading) return <div>loading...</div>
+      return <ul>{data.allPosts.map(i => <PostItem key={i.id} item={i} />)}</ul>
+    }}
+  </Query>
+)
+
+const PostItem = ({ item }) => <li>{item.text}</li>
+
 const ADD_POST = gql`
   mutation addPost($text: String!) {
     addPost(text: $text) {
@@ -55,28 +32,41 @@ const ADD_POST = gql`
   }
 `
 
-export default compose(
-  graphql(FETCH_POSTS),
-  graphql(ADD_POST, {
-    props: ({ ownProps, mutate }) => ({
-      addPost: ({ text }) =>
-        mutate({
-          mutation: ADD_POST,
-          variables: { text },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            addPost: {
-              __typename: 'Post',
-              id: null,
-              text,
-            },
-          },
-          update: (proxy, { data: { addPost } }) => {
-            const data = proxy.readQuery({ query: FETCH_POSTS })
-            data.allPosts.push(addPost)
-            proxy.writeQuery({ query: FETCH_POSTS, data })
-          },
-        }),
-    }),
-  })
-)(PostSection)
+const PostForm = () => (
+  <Mutation
+    mutation={ADD_POST}
+    update={(cache, { data: { addPost } }) => {
+      const { allPosts } = cache.readQuery({ query: FETCH_POSTS })
+      cache.writeQuery({
+        query: FETCH_POSTS,
+        data: { allPosts: allPosts.concat([addPost]) },
+      })
+    }}
+  >
+    {addPost => {
+      const form = createRef()
+      const input = createRef()
+      const handleSubmit = e => {
+        e.preventDefault()
+        addPost({ variables: { text: input.current.value } })
+          .then(res => console.log('add post:', res))
+          .catch(error => console.log(error.graphQLErrors.map(x => x.message)))
+        form.current.reset()
+      }
+
+      return (
+        <form onSubmit={handleSubmit} ref={form}>
+          <input type="text" ref={input} />
+          <input type="submit" />
+        </form>
+      )
+    }}
+  </Mutation>
+)
+
+export default () => (
+  <>
+    <PostList />
+    <PostForm />
+  </>
+)
